@@ -1,6 +1,10 @@
 <script>
-  export let count;
-  export let average;
+  // Will import from our stores file.
+  import { FeedbackStore } from '../stores.js';
+
+  // Reactive variable tracking feedback total count.
+  $: count = $FeedbackStore.length;
+  $: average = $FeedbackStore.reduce((a, { rating }) => a + rating, 0) / $FeedbackStore.length;
 </script>
 
 <div class="feedback-stats">

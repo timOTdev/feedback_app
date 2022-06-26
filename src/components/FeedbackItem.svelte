@@ -1,15 +1,14 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { FeedbackStore } from '../stores.js';
   import Card from './Card.svelte';
   export let item;
 
-  // Creates a custom event to send data to the store.
-  const dispatch = createEventDispatcher();
-
   // Function that handles delete feedback dispatch.
   const handleDelete = (itemID) => {
-    // 1st name of custom event, 2nd payload
-    dispatch('delete-feedback', itemID);
+    // Handle logic in component to return the updated version to store.
+    FeedbackStore.update((currentFeedback) => {
+      return currentFeedback.filter((item) => item.id != itemID);
+    });
   };
 </script>
 
