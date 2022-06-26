@@ -1,6 +1,8 @@
 <script>
+  import { v4 as uuidv4 } from 'uuid';
   import Card from './Card.svelte';
   import Button from './Button.svelte';
+  import RatingSelect from './RatingSelect.svelte';
 
   let message;
   let text = '';
@@ -18,14 +20,30 @@
       btnDisabled = false;
     }
   };
+
+  // Sets the selected rating.
+  const handleSelect = (e) => (rating = e.detail);
+
+  // Submits the user's text and rating.
+  const handleSubmit = () => {
+    if (text.trim().length > minText) {
+      const newFeedback = {
+        id: uuidv4(),
+        text,
+        rating: +rating,
+      };
+
+      console.log(newFeedback);
+    }
+  };
 </script>
 
 <Card>
   <header>
     <h2>How do you rate your service?</h2>
   </header>
-  <form action="">
-    <!-- Rating Select -->
+  <form on:submit|preventDefault={handleSubmit}>
+    <RatingSelect on:rating-select={handleSelect} />
     <div class="input-group">
       <input type="text" placeholder="What did you like?" on:input={handleInput} bind:value={text} />
       <Button type="submit" disabled={btnDisabled}>Send</Button>
