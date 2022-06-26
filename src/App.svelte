@@ -1,5 +1,6 @@
 <script>
 	import FeedbackList from "./components/FeedbackList.svelte";
+	import FeedbackStats from "./components/FeedbackStats.svelte";
 
 	let feedback = [
 		{
@@ -19,6 +20,10 @@
 		},
 	]
 
+	// Reactive variable tracking feedback total count.
+	$: count = feedback.length
+	$: average = feedback.reduce((a, {rating}) => a + rating, 0) / feedback.length
+
 	// Receives a ID from Card component and deletes from store.
 	const deleteFeedback = (e) => {
 		// Fetch the itemID on e.detail.
@@ -30,6 +35,7 @@
 </script>
 
 <main class="container">
+	<FeedbackStats {count} {average} />
 	<FeedbackList
 		{feedback}
 		on:delete-feedback={deleteFeedback}
