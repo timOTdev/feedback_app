@@ -2,8 +2,22 @@
     import Card from './Card.svelte'
     import Button from './Button.svelte'
 
+    let message
     let text = ''
     let btnDisabled = true
+    let minText = 10
+
+    // Validate text length.
+    const handleInput = () => {
+        if (text.trim().length <= minText) {
+            message = `Text must be at least ${minText} characters`
+            btnDisabled = true
+        }
+        else {
+            message = null
+            btnDisabled = false
+        }
+    }
 </script>
 
 <Card>
@@ -16,6 +30,8 @@
             <input
                 type="text"
                 placeholder="What did you like?"
+                on:input={handleInput}
+                bind:value = {text}
             >
             <Button
                 type='submit'
@@ -24,6 +40,11 @@
                 Send
             </Button>
         </div>
+        {#if message}
+            <div class="message">
+                {message}
+            </div>
+        {/if}
     </form>
 </Card>
 
