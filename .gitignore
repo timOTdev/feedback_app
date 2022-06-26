@@ -4,3 +4,9 @@
 .DS_Store
 
 .vscode
+
+.cache
+
+dist
+
+.env
