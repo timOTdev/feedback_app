@@ -1,4 +1,6 @@
 <script>
+  import { fade, scale } from 'svelte/transition';
+
   // Using a different to make each card.
   import FeedbackItem from './FeedbackItem.svelte';
 
@@ -10,5 +12,7 @@
 </script>
 
 {#each feedback as fb (fb.id)}
-  <FeedbackItem item={fb} on:delete-feedback />
+  <div in:scale out:fade={{ duration: 500 }}>
+    <FeedbackItem item={fb} on:delete-feedback />
+  </div>
 {/each}

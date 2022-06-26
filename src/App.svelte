@@ -33,10 +33,18 @@
     // Filters out everything but the received ID.
     feedback = feedback.filter((item) => item.id !== itemID);
   };
+
+  const addFeedback = (e) => {
+    // Grabs the payload.
+    const newFeedback = e.detail;
+
+    // Adds it to the front so it displays at top.
+    feedback = [newFeedback, ...feedback];
+  };
 </script>
 
 <main class="container">
-  <FeedbackForm />
+  <FeedbackForm on:add-feedback={addFeedback} />
   <FeedbackStats {count} {average} />
   <FeedbackList {feedback} on:delete-feedback={deleteFeedback} />
 </main>

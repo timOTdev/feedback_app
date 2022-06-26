@@ -1,5 +1,6 @@
 <script>
   import { v4 as uuidv4 } from 'uuid';
+  import { createEventDispatcher } from 'svelte';
   import Card from './Card.svelte';
   import Button from './Button.svelte';
   import RatingSelect from './RatingSelect.svelte';
@@ -9,6 +10,7 @@
   let btnDisabled = true;
   let minText = 10;
   let rating = 10;
+  const dispatch = createEventDispatcher();
 
   // Validate text length.
   const handleInput = () => {
@@ -26,14 +28,21 @@
 
   // Submits the user's text and rating.
   const handleSubmit = () => {
+    // Check again in case user messes with html.
     if (text.trim().length > minText) {
+      // Create the payload.
+      // +rating converts string to number.
       const newFeedback = {
         id: uuidv4(),
         text,
         rating: +rating,
       };
 
-      console.log(newFeedback);
+      // Send to App.
+      dispatch('add-feedback', newFeedback);
+
+      // Clears out the input.
+      text = '';
     }
   };
 </script>
