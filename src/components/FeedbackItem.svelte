@@ -1,15 +1,28 @@
 <script>
+    import {createEventDispatcher} from 'svelte'
     import Card from './Card.svelte'
     export let item
+
+    // Creates a custom event to send data to the store.
+    const dispatch = createEventDispatcher()
+
+    // Function that handles delete feedback dispatch.
+    const handleDelete = (itemID) => {
+        // 1st name of custom event, 2nd payload
+        dispatch('delete-feedback', itemID)
+    }
 </script>
 
 <Card>
     <div class="num-display">
         {item.rating}
     </div>
-    <div class="close">
+    <button
+        class="close"
+        on:click={() => handleDelete(item.id)}
+    >
         X
-    </div>
+    </button>
     <p class="text-display">
         {item.text}
     </p>
